@@ -1,0 +1,18 @@
+Images #3
+	Web App -> DB
+	DB -> Web App
+
+Previous Bills  #4
+	Date Through Bills
+
+Edit Delete #2
+	Bills Delete
+	Image Delete
+	Edit Quantity
+
+Email  #5
+	Customer Email
+
+Flask-Admin  #1
+
+2:00 - 6:00 4hrs - 1hr/each

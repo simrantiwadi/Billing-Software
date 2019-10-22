@@ -1,0 +1,173 @@
+{%extends 'layout.html'%}
+{%block content%}
+	<div id="forms">
+	<h3 style="background: #FFFF66; padding: 10px; text-align: center">Kirana Product Billing</h3>
+	<!--<a href="{{url_for('generateNewBill')}}">Generate Bill</a>-->
+	 {% if bill.id %}
+	    <!--<button class="btn btn-primary hidden-print" href="{{url_for('addProdInCart', bid=bill.id)}}">Add Product</button>-->
+	    <a href="{{url_for('addProdInCart', bid=bill.id)}}">Add Product</a>
+	    <table class="table table-bordered" border="1px" id="printtable">
+	      <thead>
+	      	<tr>
+	      		<h3><center>Kirana Product Billing</center></h3>
+	      	</tr>
+	      </thead>	
+	        <tr>
+	          <th>Sr.No</th>
+	          <th>Product</th>
+	          <th>Weight (in gm)</th>
+	          <th>Quantity</th>
+	          <th>Price (in RS)</th>
+	          <th>Total Price (in RS)</th>
+	          <td></td>
+	        </tr>
+	      {% set Totalprice = 0 %}
+	      <tbody>
+					{%if bill_products%}
+						{% set total=0 %}
+						{% set price=0 %}
+						{% for product in bill_products%}
+							{% set price = product.price * quantity[loop.index-1] %}
+							{% set Totalprice = Totalprice + price %}
+							<tr>
+						    <td>{{loop.index}}</td>
+						    <td>{{product.name}}</td>
+						    <td></td>
+						    <td>{{quantity[loop.index-1]}}</td>
+						    <td>{{product.price}}</td>
+						    <td><a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>
+							<!--<td onload="findTotal()" id="price" name="price" value="{{price}}">{{price}}</td>-->
+							<td class="fieldCell">{{price}}</td>
+							<!--<td>{{Totalprice}}</td>-->
+						  </tr>
+								{% set total=total+price %}
+								<!--<p>{{total}}</p>-->
+						{% endfor %}
+							<!--<p>{{total}}</p>-->
+					{%endif%}
+	       </tbody>
+	      	<!--<tr>
+	      		{% set totalbillprice=Totalprice %}
+	      		<td></td>
+	      		<td></td>
+	      		<td></td>
+	      		<td>Total Bill</td>
+	      		<td>{{totalbillprice}}</td>
+	      	</tr>	-->
+	    </table>
+ 	</div>
+ 	
+  {%endif%}
+	<!-- Qty8 : <input onblur="findTotal()" type="text" name="qty" id="qty8"/><br> -->
+	 <!--Total : <input type="text" name="total" id="total"/>-->
+	<button class="btn btn-primary hidden-print" onclick="myFunction()"><span class="glyphicon-print icon-share" aria-hidden="true"></span>Print</button>
+
+
+	<!--<p name="total" id="total">50</>-->
+
+<!--
+<script lang="javascript">
+	window.onload = findTotal;
+	function findTotal(){
+	    var arr = document.getElementsByName("price");
+			console.log(arr);
+	    var tot=0;
+	    // for(var i=0;i<arr.length;i++){
+	    //     if(parseInt(arr[i].value))
+	    //         tot += parseInt(arr[i].value);
+	    // }
+	    document.getElementById('total').innerHTML  = "hello";
+	}
+
+</script>
+-->
+	<!--
+	<script language="javascript" type="text/javascript">
+	            var tds = document.getElementById('countit').getElementsByTagName('td');
+	            var sum = 0;
+	            for(var i = 0; i < tds.length; i ++) {
+	                if(tds[i].className == 'count-me') {
+	                    sum += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+	                }
+	            }
+	            document.getElementById('countit').innerHTML += '<tr><td>' + sum + '</td><td>total</td></tr>';
+    </script>
+	-->
+	<script>
+		 
+		function myFunction() {
+		  //window.print();
+		   var divToPrint=document.getElementById("printtable");
+		   newWin= window.open("");
+		   newWin.document.write(divToPrint.outerHTML);
+		   newWin.print();
+		   newWin.close();
+		}
+
+	 </script>
+	
+	<script language="javascript" type="text/javascript">
+		var tds = document.getElementById('printtable').getElementsByTagName('td');
+		var sum = 0;
+		for(var i = 0; i < tds.length; i ++) {
+		if(tds[i].className == 'fieldCell') {
+		sum += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+		}
+		}
+		document.getElementById('printtable').innerHTML += '<tr> <td> ' + '</td><td>' + '</td> <td>' + '</td> <td>' + '</td> <td><strong> Total Bill</strong></td> <td> '+ '<strong>' + sum + '</strong></td></tr>';
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('[data-toggle="tooltip"]').tooltip();
+			var actions = $("table td:last-child").html();
+			// Append table with add row form on add new button click
+		    $(".add-new").click(function(){
+				$(this).attr("disabled", "disabled");
+				var index = $("table tbody tr:last-child").index();
+		        var row = '<tr>' +
+		            '<td><input type="text" class="form-control" name="name" id="name"></td>' +
+		            '<td><input type="text" class="form-control" name="department" id="department"></td>' +
+		            '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
+					'<td>' + actions + '</td>' +
+		        '</tr>';
+		    	$("table").append(row);		
+				$("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+		        $('[data-toggle="tooltip"]').tooltip();
+		    });
+			// Add row on add button click
+			$(document).on("click", ".add", function(){
+				var empty = false;
+				var input = $(this).parents("tr").find('input[type="text"]');
+		        input.each(function(){
+					if(!$(this).val()){
+						$(this).addClass("error");
+						empty = true;
+					} else{
+		                $(this).removeClass("error");
+		            }
+				});
+				$(this).parents("tr").find(".error").first().focus();
+				if(!empty){
+					input.each(function(){
+						$(this).parent("td").html($(this).val());
+					});			
+					$(this).parents("tr").find(".add, .edit").toggle();
+					$(".add-new").removeAttr("disabled");
+				}		
+		    });
+			// Edit row on edit button click
+			$(document).on("click", ".edit", function(){		
+		        $(this).parents("tr").find("td:not(:last-child)").each(function(){
+					$(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+				});		
+				$(this).parents("tr").find(".add, .edit").toggle();
+				$(".add-new").attr("disabled", "disabled");
+		    });
+			// Delete row on delete button click
+			$(document).on("click", ".delete", function(){
+		        $(this).parents("tr").remove();
+				$(".add-new").removeAttr("disabled");
+		    });
+		});
+	</script>
+{%endblock content%}

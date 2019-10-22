@@ -1,0 +1,23 @@
+{%extends 'layout.html'%}
+  {%block content%}
+  <div id="forms">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-1">
+        <img src="{{url_for('static', filename='error1.png')}}" alt="image" width="100%">
+      </div>
+      <div class="col-md-10">
+        <h2>There seems to be some error here! :(</h2>
+      </div>
+    </div><br/>
+      <p>
+        We assume the following must be the issue:
+      </p>
+      <div class="alert alert-danger">
+        1) Have you reset your password? No? <a href="{{url_for('password_reset')}}">Click here</a><br/>
+        2) Have you confirmed projects submitted by your students? No? Please check your dashboard.<br/>
+        3) Other issue? Please contact the Project Management Team.<br/>
+        <small>If you are a student, and you face this error then please immediately contact the developers.</small>
+      </div>
+  </div>
+  {%endblock content%}

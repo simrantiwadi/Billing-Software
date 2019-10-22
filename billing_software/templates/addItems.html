@@ -1,0 +1,56 @@
+{%extends 'layout.html'%}
+{%block content%}
+	<div id="forms">
+	<h3 style="background: #FFFF66; padding: 10px; text-align: center">Add New Item</h3><br/>
+	<form method="post" action="" enctype="multipart/form-data">
+		<div class="row">
+        {{ form.hidden_tag()}}
+        <div class="form-group col-md-3">
+          {% if form.pName.errors %}
+            {{form.pName(class="form-control is-invalid")}}
+            {% for error in form.pName.errors %}
+              <span class="errorFeedback">{{ error }}</span>
+            {% endfor %}
+          {% endif %}
+          {{form.pName(class="form-control", placeholder="Product Name")}}
+        </div>
+        <div class="form-group col-md-3">
+          {% if form.pPrice.errors %}
+            {{form.pPrice(class="form-control is-invalid")}}
+            {% for error in form.pPrice.errors %}
+              <span class="errorFeedback">{{ error }}</span>
+            {% endfor %}
+          {% endif %}
+          {{form.pPrice(class="form-control" , placeholder="Product Price")}}
+        </div>
+        <div class="form-group col-md-3">
+          {% if form.pWeight.errors %}
+            {{form.pWeight(class="form-control is-invalid")}}
+            {% for error in form.pWeight.errors %}
+              <span class="errorFeedback">{{ error }}</span>
+            {% endfor %}
+          {% endif %}
+          {{form.pWeight(class="form-control" , placeholder="Product Weight(in grms)")}}
+        </div>
+				<a type="button" class="btn btn-primary" href="{{url_for('addImage')}}">Capture	 Image </a>
+       	<table class="table table-bordered">
+				  <tbody>
+			    {%for each_image in array%}
+			    <tr>
+				      <th>Image - {{loop.index}}</th>
+				      <td> Status: <i class="fa fa-check" aria-hidden="true" style="color:green"></i></td>
+							<td>Length: {{each_image[2]}}</td>
+							<td>Width:{{each_image[3]}}</td>
+			    </tr>
+			    {%endfor%}
+			   </tbody>
+			</table>
+		<!-- <button type="button" class="btn btn-primary" href="{{url_for('addImage')}}">Finish</button> -->
+		<div class="form-group">
+              {{form.submit(class="btn btn-success")}}
+        </div>
+
+     </div>
+    </div>
+
+    {%endblock content%}

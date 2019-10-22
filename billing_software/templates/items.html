@@ -1,0 +1,89 @@
+{%extends 'layout.html'%}
+{%block content%}
+	<div id="forms">
+	<h3 style="background: #FFFF66; padding: 10px; text-align: center">Inventory - Items</h3>
+	<button type="button" class="btn btn-primary pull-right" ><i class="fa fa-plus" aria-hidden="true"></i>Add New Item</button><br/><br/>
+    <table class="table table-bordered" id="printtable">
+	  <thead>
+	    <tr>
+	      <th scope="col">#</th>
+	      <th scope="col">Product ID</th>
+	      <th scope="col">Name</th>
+	      <th scope="col">Cost (in RS)</th>
+	      <!-- <th scope="col">Image</th> -->
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	{% for i in range(1)%}
+	    <tr>
+	      <th scope="row">1</th>
+	      <td>101</td>
+	      <td>Parle-G Large</td>
+	      <td>20</td>
+	      <!-- <td><span class="glyphicon glyphicon-print" aria-hidden="true"></span><img src="dsbfsjb.gif" alt="N.A."></td> -->
+	    </tr>
+			<tr>
+	      <th scope="row">2</th>
+	      <td>102</td>
+	      <td>Parle-G Medium</td>
+	      <td>5</td>
+	      <!-- <td><span class="glyphicon glyphicon-print" aria-hidden="true"></span><img src="dsbfsjb.gif" alt="N.A."></td> -->
+	    </tr>
+			<tr>
+	      <th scope="row">3</th>
+	      <td>103</td>
+	      <td>Parle-G Gold</td>
+	      <td>10</td>
+	      <!-- <td><span class="glyphicon glyphicon-print" aria-hidden="true"></span><img src="dsbfsjb.gif" alt="N.A."></td> -->
+	    </tr>
+			<tr>
+	      <th scope="row">4</th>
+	      <td>104</td>
+	      <td>Parle-G Small</td>
+	      <td>2</td>
+	      <!-- <td><span class="glyphicon glyphicon-print" aria-hidden="true"></span><img src="dsbfsjb.gif" alt="N.A."></td> -->
+	    </tr>
+			<tr>
+	      <th scope="row">5</th>
+	      <td>105</td>
+	      <td>Rin Washing Soap</td>
+	      <td>10</td>
+	      <!-- <td><span class="glyphicon glyphicon-print" aria-hidden="true"></span><img src="dsbfsjb.gif" alt="N.A."></td> -->
+	    </tr>
+			<tr>
+	      <th scope="row">6</th>
+	      <td>106</td>
+	      <td>Xpert Washing Soap</td>
+	      <td>5</td>
+	      <!-- <td><span class="glyphicon glyphicon-print" aria-hidden="true"></span><img src="dsbfsjb.gif" alt="N.A."></td> -->
+	    </tr>
+			<tr>
+	      <th scope="row">7</th>
+	      <td>107</td>
+	      <td>Parle-G Small</td>
+	      <td>2</td>
+	      <!-- <td><span class="glyphicon glyphicon-print" aria-hidden="true"></span><img src="dsbfsjb.gif" alt="N.A."></td> -->
+	    </tr>
+
+
+	    {%endfor%}
+	  </tbody>
+	</table>
+	<script>
+
+		function myFunction() {
+		  //window.print();
+		   var divToPrint=document.getElementById("printtable");
+		   newWin= window.open("");
+		   newWin.document.write(divToPrint.outerHTML);
+		   newWin.print();
+		   newWin.close();
+		}
+
+	</script>
+
+	<button class="btn btn-primary hidden-print" onclick="myFunction()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span>Print</button>
+	<!-- <button type="button" class="btn btn-primary">Print</button> -->
+	<button type="button" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add New Item</button>
+    </div>
+    {%endblock content%}

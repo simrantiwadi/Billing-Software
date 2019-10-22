@@ -1,0 +1,91 @@
+{%extends 'layout.html'%}
+  {%block content%}
+  <h5>Welcome, {{current_user.name}}!</h5>
+      <div id="forms">
+        <div class="container">
+          {% if current_user.is_authenticated %}
+            <h5>Internal Projects</h5><hr>
+              <p>You are internal guide for the following list of projects:</p>
+              <div class="row">
+                <div class="col-4">
+                  <div class="list-group" id="list-tab" role="tablist">
+                    {%if not projects%}
+                      <h5>No Projects Listed</h5>
+                    {%endif%}
+                  {% for project in projects%}
+                  {% set status= ''%}
+                  {%if loop.index == 1%}
+                    {%set status = 'active'%}
+                  {%endif%}
+                    <a class="list-group-item list-group-item-action {{status}}" id="list-home-list" data-toggle="list" href="#list-{{project.title}}" role="tab" aria-controls="home">{{project.title}}</a>
+                  {%endfor%}
+                  </div>
+                </div>
+                <div class="col-8">
+                  <div class="tab-content" id="nav-tabContent">
+                    {% for project in projects%}
+                      {% set display= ''%}
+                      {%if loop.index == 1%}
+                        {%set display = 'show'%}
+                      {%endif%}
+                      <div class="tab-pane fade {{display}} active" style="word-wrap: break-word;" id="list-{{project.title}}" role="tabpanel" aria-labelledby="list-home-list">
+                        <p>Leader: {{project.team.members[0].name}}</p>
+                        <p>Code : {{project.code}}</p>
+                        <p>Last Modified: {{ project.date_created.strftime('%d-%B-%Y at %H:%M (%A)') }}</p>
+                        <p>Last Meeting: {{ project.date_created.strftime('%d-%B-%Y at %H:%M (%A)') }}</p>
+                        <p>Current Score: 5.6/10</p>
+                        <a href="{{url_for('trackProjects', data=project.code)}}" class="btn btn-outline-primary btn-sm" role="button">View</a>
+                        <a href="{{url_for('assignMarks', data=project.id)}}" class="btn btn-outline-primary btn-sm" role="button">Add Demo</a>
+                      </div>
+                    {%endfor%}
+                  </div>
+                </div>
+              </div>
+          {%endif%}
+        </div>
+      </div><br />
+      <div id="forms">
+        <div class="container">
+          {% if current_user.is_authenticated %}
+          <h5>External Projects</h5><hr>
+              <p>You are external guide for the following list of projects:</p>
+              <div class="row">
+                <div class="col-4">
+                  <div class="list-group" id="list-tab" role="tablist">
+                    {%if not proj_external%}
+                      <h5>No Projects Listed</h5>
+                    {%endif%}
+                  {% for project in proj_external%}
+                  {% set status= ''%}
+                  {%if loop.index == 1%}
+                    {%set status = 'active'%}
+                  {%endif%}
+                    <a class="list-group-item list-group-item-action {{status}}" id="list-home-list" data-toggle="list" href="#list-{{project.title}}" role="tab" aria-controls="home">{{project.title}}</a>
+                  {%endfor%}
+                  </div>
+                </div>
+                <div class="col-8">
+                  <div class="tab-content" id="nav-tabContent">
+                    {% for project in proj_external%}
+                      {% set display= ''%}
+                      {%if loop.index == 1%}
+                        {%set display = 'show'%}
+                      {%endif%}
+                      <div class="tab-pane fade {{display}} active" style="word-wrap: break-word;" id="list-{{project.title}}" role="tabpanel" aria-labelledby="list-home-list">
+                        <p>Leader: {{project.team.members[0].name}}</p>
+                        <p>Code : {{project.code}}</p>
+                        <p>Last Modified: {{ project.date_created.strftime('%d-%B-%Y at %H:%M (%A)') }}</p>
+                        <p>Last Meeting: {{ project.date_created.strftime('%d-%B-%Y at %H:%M (%A)') }}</p>
+                        <p>Current Score: 5.6/10</p>
+                        <a href="{{url_for('trackProjects', data=project.code)}}" class="btn btn-outline-primary btn-sm" role="button">View</a>
+                        <a href="{{url_for('assignMarks', data=project.id)}}" class="btn btn-outline-primary btn-sm" role="button">Add Demo</a>
+                      </div>
+                    {%endfor%}
+                  </div>
+                </div>
+              </div>
+          {%endif%}
+        </div>
+      </div><br />
+
+  {%endblock content%}
